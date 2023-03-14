@@ -81,7 +81,7 @@ def function_updator (model):
         data_owner3.to_pickle('taylorlorenz_owner.pkl')
         read_function()
     
-
+function_API()
         
-threading.Thread(target=function_API).start()
-threading.Thread(target=function_updator).start()
+# threading.Thread(target=function_API).start()
+# threading.Thread(target=function_updator).start()
