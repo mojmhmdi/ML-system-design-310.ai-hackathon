@@ -18,7 +18,7 @@ def tweet_scraper(account, start_time, end_time, scraping_type = 'replies'):
     query = 'from:' + account + ' since:'+ start_time +' until:' + str(end_time)
 
   for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
-
+      
       if i>100000:
           break
       tweets.append([tweet.date,  tweet.conversationId, tweet.rawContent, tweet.user.username])
@@ -42,7 +42,7 @@ def data_update(data_repo, account, model, scraping_type = 'replies'):
     model: the name of the sentiment classifier model. model must take the text and output a list of three scores
     """
     end_time = date.today()
-    start_time = str(end_time.year)+'-'+str(end_time.month-1)+'-'+str(end_time.day-10)
+    start_time = str(end_time.year)+'-'+str(end_time.month)+'-'+str(end_time.day-1)
     data = tweet_scraper(account, start_time, end_time, scraping_type)
     index = np.where(data_repo['Datetime'][0]==data['Datetime'][:])
     if any(index):
@@ -56,9 +56,11 @@ def data_update(data_repo, account, model, scraping_type = 'replies'):
       score = model.forward(tweet_cleaning(data['Text'][i]))
       sentiment_scores.append(score)
     data_repo['sentiment'][:data.shape[0]] = sentiment_scores
+    data_repo.index = range(data_repo.shape[0])
+
     return data_repo
     
-# data_concatenator(data1, '@cathiedwood', model, thread_type='total')
+# data_concatenator(data1, '@cathiedwood', model, scraping_type = 'replies')
     
 def active_audience(data, alpha):
   """alpha: percentage of top active users (ex. 5)
@@ -89,7 +91,6 @@ def Polarity_Score(data):
   return sentiment_score
 # Polarity_Score(data1['sentiment']) gets the output of the sentiment_sum function
 
-
 def sentiment_sum ( data, column= 'conversation Id'):
   if column == 'conversation Id':
 
@@ -110,3 +111,4 @@ def sentiment_sum ( data, column= 'conversation Id'):
   return output
 #sentiment_sum(data2, column = 'conversation Id')
 
+  
