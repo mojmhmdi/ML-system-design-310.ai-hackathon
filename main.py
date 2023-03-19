@@ -89,3 +89,5 @@ def function_updator (model):
             
 threading.Thread(target=function_API).start()
 threading.Thread(target=function_updator(model)).start()
+
+
