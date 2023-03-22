@@ -39,7 +39,7 @@ class  accounts (Resource):
 
 class  tweets (Resource):
     def get(self,pk):
-     return data[pk]['owner'].to_json(orient='index')
+     return pd.read_pickle('datasets/'+pk+'_owner.pkl').to_json(orient='index')
 
 class  audience (Resource):
     def get(self,pk):
@@ -79,13 +79,7 @@ def function_updator (model):
             data_replies3.to_pickle('datasets/taylorlorenz_replies.pkl')
             data_owner3.to_pickle('datasets/taylorlorenz_owner.pkl')
 
-            global data_cathiedwood_owner,data_cathiedwood_replies, data_ylecun_owner,data_ylecun_replies,data_taylorlorenz_owner,data_taylorlorenz_replies
-            data_cathiedwood_owner = pd.read_pickle('datasets/cathiedwood_owner.pkl')
-            data_cathiedwood_replies = pd.read_pickle('datasets/cathiedwood_replies.pkl')
-            data_ylecun_owner = pd.read_pickle('datasets/ylecun_owner.pkl')
-            data_ylecun_replies = pd.read_pickle('datasets/ylecun_replies.pkl')
-            data_taylorlorenz_owner = pd.read_pickle('datasets/taylorlorenz_owner.pkl')
-            data_taylorlorenz_replies = pd.read_pickle('datasets/taylorlorenz_replies.pkl')
+
             
 threading.Thread(target=function_API).start()
 threading.Thread(target=function_updator(model)).start()
