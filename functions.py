@@ -52,6 +52,15 @@ def data_update(data_repo, account, model, scraping_type = 'replies'):
       sentiment_scores.append(score)
     data_repo['sentiment'][:data.shape[0]] = sentiment_scores
     data_repo.index = range(data_repo.shape[0])
+    for i in range(100):
+          for j in range(i+1,100):
+                if data['Text'][i]== data['Text'][j]:
+                      print(1)
+                      data = data.drop(i)
+                      break
+                  
+    data.index = range(data.shape[0])
+
     return data_repo
 
 # data_concatenator(data1, '@cathiedwood', model, scraping_type = 'replies')
