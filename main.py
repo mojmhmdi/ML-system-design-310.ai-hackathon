@@ -66,6 +66,13 @@ def function_updator (model):
     while True: 
         if (time.time() % (3600*6)) <0.001:
 
+            data_cathiedwood_owner = pd.read_pickle('datasets/cathiedwood_owner.pkl')
+            data_cathiedwood_replies = pd.read_pickle('datasets/cathiedwood_replies.pkl')
+            data_ylecun_owner = pd.read_pickle('datasets/ylecun_owner.pkl')
+            data_ylecun_replies = pd.read_pickle('datasets/ylecun_replies.pkl')
+            data_taylorlorenz_owner = pd.read_pickle('datasets/taylorlorenz_owner.pkl')
+            data_taylorlorenz_replies = pd.read_pickle('datasets/taylorlorenz_replies.pkl')
+            
             data_replies1 = data_update(data_cathiedwood_replies, 'cathiedwood', model, scraping_type = 'replies')
             data_owner1 = data_update(data_cathiedwood_owner, 'cathiedwood', model, scraping_type = 'owner')
             data_replies2 = data_update(data_ylecun_replies, 'ylecun', model, scraping_type = 'replies')
