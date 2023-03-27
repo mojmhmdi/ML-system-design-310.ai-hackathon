@@ -31,6 +31,7 @@ def tweet_cleaning (tweet):
   temp = ' '.join(word for word in tweet.split(' ') if not word.startswith('@'))
   return ' '.join(word for word in temp.split(' ') if not word.startswith('http'))
 
+
 def data_update(data_repo, account, model, scraping_type = 'replies'):
     """
     this function is used to keep the data set of thweets updated. It downloads new tweets, calculate their sentiment scores, and adds them to exsisting dataset.
@@ -44,23 +45,30 @@ def data_update(data_repo, account, model, scraping_type = 'replies'):
     index = np.where(data_repo['Datetime'][0]==data['Datetime'][:])
     if any(index):
       data_repo = pd.concat([data[:int(np.array(index[0]))], data_repo])
+      print('np.where = True')
     else :
       data_repo = pd.concat([data, data_repo])
+      print('np.where = false')
+
     sentiment_scores = []
     for i in range(data.shape[0]):
+      if i%500 ==0:
+        print('sentiment analysis',i)
       score = model.forward(tweet_cleaning(data['Text'][i]))
       sentiment_scores.append(score)
     data_repo['sentiment'][:data.shape[0]] = sentiment_scores
     data_repo.index = range(data_repo.shape[0])
-    for i in range(100):
-          for j in range(i+1,100):
-                if data['Text'][i]== data['Text'][j]:
-                      print(1)
-                      data = data.drop(i)
-                      break
-                  
-    data.index = range(data.shape[0])
 
+    for i in range(100):
+      if i < data_repo.shape[0]:
+
+        for j in range(i+1,min(100,data_repo.shape[0])):
+              if data_repo['Text'][i]== data_repo['Text'][j]:
+
+                    data_repo = data_repo.drop(i)
+                    break
+      
+    data_repo.index = range(data_repo.shape[0])
     return data_repo
 
 # data_concatenator(data1, '@cathiedwood', model, scraping_type = 'replies')
