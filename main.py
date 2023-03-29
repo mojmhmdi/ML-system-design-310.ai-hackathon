@@ -79,12 +79,6 @@ def function_updator (model):
             data_owner2 = data_update(data_ylecun_owner, 'ylecun', model, scraping_type = 'owner')
             data_replies3 = data_update(data_taylorlorenz_replies, 'taylorlorenz', model, scraping_type = 'replies')
             data_owner3 = data_update(data_taylorlorenz_owner, 'taylorlorenz', model, scraping_type = 'owner')
-            data_replies1.to_pickle('datasets/cathiedwood_replies.pkl')
-            data_owner1.to_pickle('datasets/cathiedwood_owner.pkl')
-            data_replies2.to_pickle('datasets/ylecun_replies.pkl')
-            data_owner2.to_pickle('datasets/ylecun_owner.pkl')
-            data_replies3.to_pickle('datasets/taylorlorenz_replies.pkl')
-            data_owner3.to_pickle('datasets/taylorlorenz_owner.pkl')
 
 
             
